@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.stats-text {
+    font-size:  calc(4rem + 1vw);
+}
+.shadow {
+    box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.10);
+}
+
+.corner-wrapper {
+    /* display: block; */
+    /* overflow: hidden; */
+    width: 749.115px;
+    height: 455.148px;
+    border-radius: 18px;
+    transform: translateZ(0px);
+}
+
+.corner-wrapper-mobile {
+    display: block;
+     overflow: hidden;
+    width: 342px;
+    height: 207.793px;
+    border-radius: 8px;
+    transform: translateZ(0px);
+}
+
+.parents-background {
+    background: url("../public/images/Pattern-BG.svg"), #195EF7;
+    background-repeat: no-repeat;
+    /* margin-right: -40px; */
+    background-position: 80%;
+}
+
+.lessons-background {
+    background-image: url("../public/images/lessons-bg.png"), linear-gradient(103deg, rgba(0, 151, 106, 1), rgba(0, 190, 126, 1));
+    background-position: 94%;
+    background-repeat: no-repeat;
+}
+
+.parent-card {
+    border-radius: 40px 40px 40px 0px;
+}
+
+.lessons-gradient {
+    /* border: 4px solid transparent;
+    background: linear-gradient(white, white) padding-box, linear-gradient(180deg, rgba(25, 94, 247, 0.1) 0%, rgba(0, 190, 126, 0.1) 100%) 1;
+    border-radius: 18px; */
+
+    /* //background: linear-gradient(180deg, rgba(25, 94, 247, 0.1) 0%, rgba(0, 190, 126, 0.1) 100%), */
+    background: linear-gradient(white, white) padding-box,
+        linear-gradient(180deg, rgba(25, 94, 247, 0.1) 0%, rgba(0, 190, 126, 0.1) 100%) border-box;
+    border-radius: 18px;
+    border: 4px solid transparent;
+}
+
+.border-gradient {
+    border: 2px solid;
+    border-image-slice: 1;
+  }
+
+.border-gradient-green {
+    border-image-source: linear-gradient(to left, #195EF7, #00BE7E);
+  }
+
+  .only-top {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+  }

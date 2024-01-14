@@ -1,0 +1,61 @@
+image: node:18-alpine
+pipelines:
+  branches:
+    staging:
+    - step:
+        name: Build
+        script:
+          - npm install
+          - npm run build
+        artifacts:
+          - out/**
+    - step:
+        name: Deploy to Staging S3
+        deployment: production
+        script:
+          - pipe: atlassian/aws-s3-deploy:1.1.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+              AWS_DEFAULT_REGION: 'eu-west-1'
+              S3_BUCKET: 'staging.edukoya.com'
+              LOCAL_PATH: 'out'
+              ACL: 'public-read'
+    - step:
+        name: Invalidate Cloudfront Cache - Staging
+        script:
+          - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+              AWS_DEFAULT_REGION: 'eu-west-1'
+              DISTRIBUTION_ID: $STAGING_DISTRIBUTION_ID
+    main:
+      - step:
+          name: Build
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - out/**
+      - step:
+          name: Deploy to Prod S3
+          deployment: production
+          script:
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+                AWS_DEFAULT_REGION: 'eu-west-1'
+                S3_BUCKET: 'edukoya.com'
+                LOCAL_PATH: 'out'
+                ACL: 'public-read'
+      - step:
+          name: Invalidate Cloudfront Cache - Prod
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+                AWS_DEFAULT_REGION: 'eu-west-1'
+                DISTRIBUTION_ID: $PROD_DISTRIBUTION_ID
